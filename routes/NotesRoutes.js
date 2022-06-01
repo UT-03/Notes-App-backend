@@ -21,7 +21,7 @@ router.post('/add-new-note', [
         .isLength({ min: 10 })
 ], notesControllers.createNewNote);
 
-router.patch('edit-note/:noteId', [
+router.patch('/edit-note', [
     check('heading')
         .not()
         .isEmpty(),
@@ -32,6 +32,6 @@ router.patch('edit-note/:noteId', [
         .isLength({ min: 10 })
 ], notesControllers.editNote);
 
-router.delete('/:noteId', notesControllers.deleteNote);
+router.delete('/', notesControllers.deleteNote);
 
 module.exports = router;

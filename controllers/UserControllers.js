@@ -36,12 +36,13 @@ const signup = async (req, res, next) => {
 
     const newUser = new User({
         username,
-        passowrd: hashedPassword
+        password: hashedPassword
     });
 
     try {
         await newUser.save();
     } catch (err) {
+        console.log(err);
         const error = new HttpError('Something went wrong, please try again later.', 500);
         return next(error);
     }
