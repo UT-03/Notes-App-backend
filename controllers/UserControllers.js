@@ -78,7 +78,7 @@ const login = async (req, res, next) => {
     }
 
     if (!existingUser) {
-        const error = new HttpError('Invalid credentials, could not log you in.', 404);
+        const error = new HttpError('User does not exist, please try signin instead.', 404);
         return next(error);
     }
 
