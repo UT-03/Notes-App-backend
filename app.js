@@ -9,8 +9,6 @@ const userRoutes = require('./routes/UserRoutes');
 const notesRoutes = require('./routes/NotesRoutes');
 const HttpError = require('./util/HttpError');
 
-const PORT = 5000;
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -47,10 +45,10 @@ mongoose
     )
     .then(() => {
         console.log("Connected to database!")
-        app.listen(PORT);
+        app.listen(process.env.PORT);
     })
     .then(() => {
-        console.log(`Server started at http://localhost:${PORT}`);
+        console.log(`Server started at http://localhost:${process.env.PORT}`);
     })
     .catch(err => {
         console.log(err);
