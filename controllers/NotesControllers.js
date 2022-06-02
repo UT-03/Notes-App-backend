@@ -23,7 +23,14 @@ const getNotes = async (req, res, next) => {
     }
 
     res.json({
-        notes: userWithNotes.notes.map(note => note.toObject({ getters: true }))
+        notes: userWithNotes.notes.map(note => {
+            return {
+                id: note._id,
+                heading: note.heading,
+                tags: note.tags,
+                body: note.body
+            }
+        })
     })
 }
 
@@ -70,7 +77,14 @@ const createNewNote = async (req, res, next) => {
         return next(error);
     }
 
-    res.status(201).json({ message: "Note added" });
+    res.status(201).json({
+        note: {
+            id: newNote._id,
+            heading: newNote.heading,
+            tags: newNote.tags,
+            body: newNote.body
+        }
+    });
 }
 
 const editNote = async (req, res, next) => {
@@ -79,13 +93,11 @@ const editNote = async (req, res, next) => {
         return next(new HttpError('Invalid inputs, Please try again later!', 406));
     }
 
-    const { heading, tags, body } = req.body;
-    const noteId = req.params.noteId;
-
+    const { id, heading, tags, body } = req.body;
 
     let note;
     try {
-        note = await Note.findById(noteId);
+        note = await Note.findById(id);
     } catch (err) {
         console.log(err);
         const error = new HttpError('Something went wrong, Please try again later.', 500);
@@ -111,16 +123,21 @@ const editNote = async (req, res, next) => {
     }
 
     res.json({
-        note: note.toObject({ getters: true })
+        note: {
+            id: note._id,
+            heading: note.heading,
+            tags: note.tags,
+            body: note.body
+        }
     });
 }
 
 const deleteNote = async (req, res, next) => {
-    const noteId = req.params.noteId;
+    const { id } = req.body;
 
     let noteToBeDeleted;
     try {
-        noteToBeDeleted = await Note.findById(noteId).populate('creator');
+        noteToBeDeleted = await Note.findById(id).populate('creator');
     } catch (err) {
         console.log(err);
         const error = new HttpError('Something went wrong, Please try again later.', 500);
