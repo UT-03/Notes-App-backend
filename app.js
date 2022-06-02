@@ -16,9 +16,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // CORS handler
-app.use(cors({
-    origin: `${process.env.FRONTEND_SERVER_URL}`
-}))
+app.use(cors())
 
 // Routes here
 app.use('/api/user', userRoutes);
