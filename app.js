@@ -18,6 +18,13 @@ app.use(bodyParser.json());
 // CORS handler
 app.use(cors())
 
+// app.use(cors({
+
+// }))
+// console.log(cors)
+app.use(cors({
+    origin: "http://localhost:3000"
+}))
 // Routes here
 app.use('/api/user', userRoutes);
 app.use('/api/notes', notesRoutes);
